@@ -1,0 +1,438 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+	namespace="com.mycompany.webapp.dao.IApplicationRepository">
+
+	<insert id="insertWord"
+		parameterType="com.mycompany.webapp.dto.WordVO">
+    <![CDATA[
+      INSERT INTO word 
+      						(WORD_NO
+      						,WORD_NM
+      						,WORD_ENG_ABBN
+      						,WORD_ENG_NM
+      						,WORD_EXPLN
+      						,APRV_STTS
+      						,REG_DT
+							,MDFCN_DT
+							,MDFCN_ID
+							,REG_ID
+							,DEL_YN) 
+      VALUES 
+      	  (#{wordVO.wordNo}
+      	  ,#{wordVO.wordNm}
+      	  ,#{wordVO.wordEngAbbn}
+      	  ,#{wordVO.wordEngNm}
+      	  ,#{wordVO.wordExpln}
+      	  ,'승인대기'
+      	  ,CURRENT_TIMESTAMP
+      	  ,CURRENT_TIMESTAMP	
+      	  ,#{wordVO.mdfcnId}
+      	  ,#{wordVO.regId}
+      	  ,'Y'
+      	  )
+    ]]>
+	</insert>
+	
+	<insert id="insertDomain"
+		parameterType="com.mycompany.webapp.dto.DomainVO">
+    <![CDATA[
+      INSERT INTO domain 
+      						(DOMAIN_NO
+      						,DOMAIN_NM
+      						,DOMAIN_GNM
+      						,DOMAIN_EXPLN
+      						,DOMAIN_CATG
+      						,DOMAIN_TYPE
+      						,DOMAIN_LENGTH
+							,APRV_STTS
+							,REG_DT
+							,MDFCN_DT
+							,MDFCN_ID
+							,REG_ID
+							,DEL_YN) 
+      VALUES 
+      	  (#{domainVO.domainNo}
+      	  ,#{domainVO.domainNm}
+      	  ,#{domainVO.domainGnm}
+      	  ,#{domainVO.domainExpln}
+      	  ,#{domainVO.domainCatg}
+      	  ,#{domainVO.domainType}
+      	  ,#{domainVO.domainLength}
+      	  ,'승인대기'
+      	  ,CURRENT_TIMESTAMP
+      	  ,CURRENT_TIMESTAMP
+      	  ,#{domainVO.mdfcnId}
+      	  ,#{domainVO.regId}
+      	  ,'Y'
+      	  )	
+    ]]>
+	</insert>
+
+	<insert id="insertDomainApplication"
+		parameterType="com.mycompany.webapp.dto.ApplicationVO">
+    <![CDATA[
+      INSERT INTO DOMAIN 
+      						(DOMAIN_NO
+      						,DOMAIN_NM
+      						,DOMAIN_GNM
+      						,DOMAIN_EXPLN
+      						,DOMAIN_CATG
+      						,DOMAIN_TYPE
+      						,DOMAIN_LENGTH
+      						,APRV_STTS
+      						,REG_DT
+							,REG_ID)
+      VALUES 
+      	  (#{domainNo}
+      	  ,#{domainNm}
+      	  ,#{domainGrpNm}
+      	  ,#{domainExpln}
+      	  ,#{domainCatg}
+      	  ,#{domainType}
+      	  ,#{domainLen}
+      	  ,'승인전'
+      	  ,CURRENT_TIMESTAMP
+      	  ,#{domainregId})
+    ]]>
+	</insert>
+	<insert id="insertWordApplication1"
+		parameterType="com.mycompany.webapp.dto.ApplicationVO">
+    <![CDATA[
+      INSERT INTO WORD 
+							(WORD_NO
+							,WORD_NM
+							,WORD_ENG_ABBN
+							,WORD_ENG_NM
+							,WORD_EXPLN
+							,APRV_STTS
+							,REG_DT
+							,REG_ID) 
+			VALUES 
+				(#{wordNo1}
+				,#{wordNm1}
+				,#{wordEngAbbn1}
+				,#{wordEngNm1}
+				,#{wordExpln1}
+				,'승인전'
+				,CURRENT_TIMESTAMP
+				,#{wordregId1})
+    ]]>
+	</insert>
+	<insert id="insertWordApplication2"
+		parameterType="com.mycompany.webapp.dto.ApplicationVO">
+    <![CDATA[
+        INSERT INTO WORD 
+							(WORD_NO
+							,WORD_NM
+							,WORD_ENG_ABBN
+							,WORD_ENG_NM
+							,WORD_EXPLN
+							,APRV_STTS
+							,REG_DT
+							,REG_ID) 
+			VALUES 
+				(#{wordNo2}
+				,#{wordNm2}
+				,#{wordEngAbbn2}
+				,#{wordEngNm2}
+				,#{wordExpln2}
+				,'승인전'
+				,CURRENT_TIMESTAMP
+				,#{wordregId2})
+    ]]>
+	</insert>
+	<insert id="insertWordApplication3"
+		parameterType="com.mycompany.webapp.dto.ApplicationVO">
+    <![CDATA[
+      INSERT INTO WORD 
+							(WORD_NO
+							,WORD_NM
+							,WORD_ENG_ABBN
+							,WORD_ENG_NM
+							,WORD_EXPLN
+							,APRV_STTS
+							,REG_DT
+							,REG_ID) 
+			VALUES 
+				(#{wordNo3}
+				,#{wordNm3}
+				,#{wordEngAbbn3}
+				,#{wordEngNm3}
+				,#{wordExpln3}
+				,'승인전'
+				,CURRENT_TIMESTAMP
+				,#{wordregId3})
+    ]]>
+	</insert>
+	<insert id="insertWordApplication4"
+		parameterType="com.mycompany.webapp.dto.ApplicationVO">
+    <![CDATA[
+      INSERT INTO WORD 
+							(WORD_NO
+							,WORD_NM
+							,WORD_ENG_ABBN
+							,WORD_ENG_NM
+							,WORD_EXPLN
+							,APRV_STTS
+							,REG_DT
+							,REG_ID) 
+			VALUES 
+				(#{wordNo4}
+				,#{wordNm4}
+				,#{wordEngAbbn4}
+				,#{wordEngNm4}
+				,#{wordExpln4}
+				,'승인전'
+				,CURRENT_TIMESTAMP
+				,#{wordregId4})
+    ]]>
+	</insert>
+	<insert id="insertWordApplication5"
+		parameterType="com.mycompany.webapp.dto.ApplicationVO">
+    <![CDATA[
+      INSERT INTO WORD 
+							(WORD_NO
+							,WORD_NM
+							,WORD_ENG_ABBN
+							,WORD_ENG_NM
+							,WORD_EXPLN
+							,APRV_STTS
+							,REG_DT
+							,REG_ID) 
+			VALUES 
+				(#{wordNo5}
+				,#{wordNm5}
+				,#{wordEngAbbn5}
+				,#{wordEngNm5}
+				,#{wordExpln5}
+				,'승인전'
+				,CURRENT_TIMESTAMP
+				,#{wordregId5})
+    ]]>
+	</insert>
+	<insert id="insertWordApplication6"
+		parameterType="com.mycompany.webapp.dto.ApplicationVO">
+    <![CDATA[
+ 	 INSERT INTO WORD 
+							(WORD_NO
+							,WORD_NM
+							,WORD_ENG_ABBN
+							,WORD_ENG_NM
+							,WORD_EXPLN
+							,APRV_STTS
+							,REG_DT
+							,REG_ID) 
+			VALUES 
+				(#{wordNo6}
+				,#{wordNm6}
+				,#{wordEngAbbn6}
+				,#{wordEngNm6}
+				,#{wordExpln6}
+				,'승인전'
+				,CURRENT_TIMESTAMP
+				,#{wordregId6})
+    ]]>
+	</insert>
+	<insert id="insertWordApplication7"
+		parameterType="com.mycompany.webapp.dto.ApplicationVO">
+    <![CDATA[
+       INSERT INTO WORD 
+							(WORD_NO
+							,WORD_NM
+							,WORD_ENG_ABBN
+							,WORD_ENG_NM
+							,WORD_EXPLN
+							,APRV_STTS
+							,REG_DT
+							,REG_ID) 
+			VALUES 
+				(#{wordNo7}
+				,#{wordNm7}
+				,#{wordEngAbbn7}
+				,#{wordEngNm7}
+				,#{wordExpln7}
+				,'승인전'
+				,CURRENT_TIMESTAMP
+				,#{wordregId7})
+    ]]>
+	</insert>
+	
+	<insert id="insertWordApplication8"
+		parameterType="com.mycompany.webapp.dto.ApplicationVO">
+    <![CDATA[
+      INSERT INTO WORD 
+							(WORD_NO
+							,WORD_NM
+							,WORD_ENG_ABBN
+							,WORD_ENG_NM
+							,WORD_EXPLN
+							,APRV_STTS
+							,REG_DT
+							,REG_ID) 
+			VALUES 
+				(#{wordNo8}
+				,#{wordNm8}
+				,#{wordEngAbbn8}
+				,#{wordEngNm8}
+				,#{wordExpln8}
+				,'승인전'
+				,CURRENT_TIMESTAMP
+				,#{wordregId8})
+    ]]>
+	</insert>
+	
+	<insert id="insertWordApplication9"
+		parameterType="com.mycompany.webapp.dto.ApplicationVO">
+    <![CDATA[
+      INSERT INTO WORD 
+							(WORD_NO
+							,WORD_NM
+							,WORD_ENG_ABBN
+							,WORD_ENG_NM
+							,WORD_EXPLN
+							,APRV_STTS
+							,REG_DT
+							,REG_ID) 
+			VALUES 
+				(#{wordNo9}
+				,#{wordNm9}
+				,#{wordEngAbbn9}
+				,#{wordEngNm9}
+				,#{wordExpln9}
+				,'승인전'
+				,CURRENT_TIMESTAMP
+				,#{wordregId9})
+    ]]>
+	</insert>
+	
+	<select id="getMaxWordNo" resultType="int">
+	 <![CDATA[
+    	select MAX(WORD_NO) from WORD
+   	]]>
+	</select>
+	
+	<select id="getMaxDomainNo" resultType="int">
+	 <![CDATA[
+    	select MAX(DOMAIN_NO) from DOMAIN
+   	]]>
+	</select>
+	
+	<select id="getMaxTermNo" resultType="int">
+	 <![CDATA[
+		select MAX(TERM_NO) from TERM
+   	]]>
+	</select>
+	
+	<select id="getOracleDataTypeChar" resultType="String">
+	 <![CDATA[
+    	select 
+    		COMM_NM 
+    	from COMMONCODE
+    		,COMMONGROUP  
+    	where COMMONCODE.GRP_CD = COMMONGROUP.GRP_CD 
+    		and COMM_NM LIKE 'CHAR'
+   	]]>
+	</select>
+	<select id="getOracleDataTypeVarChar2" resultType="String">
+	 <![CDATA[
+      	select 
+    		COMM_NM 
+    	from COMMONCODE
+    		,COMMONGROUP  
+    	where COMMONCODE.GRP_CD = COMMONGROUP.GRP_CD 
+    		and COMM_NM LIKE 'VARCHAR2'
+   	]]>
+	</select>
+	<select id="getOracleDataTypeNumber" resultType="String">
+	 <![CDATA[
+        select 
+    		COMM_NM 
+    	from COMMONCODE
+    		,COMMONGROUP  
+    	where COMMONCODE.GRP_CD = COMMONGROUP.GRP_CD 
+    		and COMM_NM LIKE 'NUMBER'
+   	]]>
+	</select>
+	<select id="getOracleDataTypeDate" resultType="String">
+	 <![CDATA[
+      	select 
+    		COMM_NM 
+    	from COMMONCODE
+    		,COMMONGROUP  
+    	where COMMONCODE.GRP_CD = COMMONGROUP.GRP_CD 
+    		and COMM_NM LIKE 'DATE'
+   	]]>
+	</select>
+	
+	
+	<select id="getDomainEngAbbg"
+		resultType="String">
+	 <![CDATA[
+ 	 SELECT
+ 	 	WORD_ENG_ABBN
+	 FROM WORD
+	 WHERE WORD_NM like #{wordName}
+   	]]>
+	</select>
+
+
+	<select id="wordSearchCheck" resultType="String">
+	 <![CDATA[
+      SELECT
+      	 WORD_NM AS "wordNm"
+      FROM word
+      WHERE WORD_NM LIKE #{wordName}
+   	]]>
+	</select>
+	
+	<select id="domainSearchCheck" resultType="String">
+	 <![CDATA[
+      SELECT
+      	 DOMAIN_NM AS "domainNm"
+      FROM domain
+      WHERE DOMAIN_NM LIKE #{domainName}
+   	]]>
+	</select>
+	
+	<select id="termSearchCheck" resultType="String">
+	 <![CDATA[
+      SELECT
+      	 TERM_NM AS "termNm", TERM_NO AS "termNo"
+      FROM term
+      WHERE TERM_NM LIKE #{termName}
+   	]]>
+	</select>
+	
+
+	<select id="getCurrentDomain"
+		resultType="String">
+	 <![CDATA[
+ 	  SELECT
+      	DOMAIN_NM AS "domainNm"
+      FROM domain
+      WHERE REGEXP_LIKE (DOMAIN_NM, #{wordName})
+   	]]>
+	</select>
+
+	<select id="getWordList"
+		resultType="com.mycompany.webapp.dto.WordVO">
+		<![CDATA[
+			SELECT 
+				WORD_NO AS "wordNo"
+				,WORD_NM AS "wordNm"
+				,WORD_ENG_ABBN AS "wordEngAbbn"
+				,WORD_ENG_NM AS "wordEngNm"
+				,WORD_EXPLN AS "wordExpln" 
+				,APRV_STTS AS "appvStts"
+				,REG_DT AS "regDt"
+				,MDFCN_DT AS "mdfcnDt"
+				,MDFCN_ID AS "mdfcnId"
+				,REG_ID AS "regId"
+				,DEL_YN AS "delYn"
+			FROM 
+				WORD 			
+			]]>
+	</select>
+
+</mapper>

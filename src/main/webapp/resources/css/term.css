@@ -1,0 +1,297 @@
+.flex-container {
+	width: 100%;
+	height: 80vh;
+	display: -webkit-box;
+	display: -moz-box;
+	display: -ms-flexbox;
+	display: flex;
+	-webkit-box-align: center;
+	-moz-box-align: center;
+	-ms-flex-align: center;
+	align-items: center; /* 수직 정렬 */
+	-webkit-box-pack: center;
+	-moz-box-pack: center;
+	-ms-flex-pack: center;
+	justify-content: center; /* 수평 정렬 */
+}
+
+.body{
+ font-family: Arial, sana-serif;
+}
+
+.input-group>.form-control, .input-group>.form-floating, .input-group>.form-select
+	{
+	flex: none;
+	width: 500px;
+	margin-left: 25%;
+	justify-content: center;
+}
+
+.img_excel{
+   position: relative;
+    width: 94px;
+    height: 82px;
+    margin-left: 245px;
+    z-index: 2;
+    float: right;
+    top: 18px;
+}
+
+.input-group mb-3 {
+	width: 500px;
+	height: 100px;
+	
+}
+
+.mb-3{
+	margin-left: 40%;
+}
+
+.form-control {
+	width: 500px;
+	height: 50px;
+}
+
+.container {
+	max-width: 1200px;
+}
+
+.responsive-table li {
+	border-radius: 3px;
+	padding: 9px 25px;
+	display: flex;
+	justify-content: space-between;
+	margin-bottom: 25px;
+	width: 1200px;
+	height: 55px;
+}
+
+.responsive-table .table-header {
+	background-color: #95A5A6;
+	font-size: 15px;
+	letter-spacing: 0.05em;
+	float: left;
+	 vertical-align: middle;
+	
+}
+
+.responsive-table .table-row {
+	background-color: #ffffff;
+	box-shadow: 0px 0px 9px 0px rgba(0, 0, 0, 0.1);
+	letter-spacing: 0.03em;
+	float: left;
+}
+
+  .col-1 { 
+    flex-basis: 25%;
+  }
+  .col-2 {
+    flex-basis: 25%;
+  }
+  .col-3 {
+    flex-basis: 20%;
+  }
+  .col-4 {
+    flex-basis: 20%;
+  }
+  .col-5 {
+    flex-basis: 10%;
+  }
+
+@media all and (max-width: 1200px) {
+	.responsive-table .table-header {
+		display: none;		
+	}
+	.responsive-table li {
+		display: block;
+	}
+	.responsive-table .col {
+		flex-basis: 100%;
+	}
+	.responsive-table .col {
+		display: flex;
+		padding: 20px 0;
+	}
+	.responsive-table .col:before {
+		color: #6C7A89;
+		padding-right: 20px;
+		content: attr(data-label);
+		flex-basis: 50%;
+	}
+}
+
+/* autocomplete box */
+.ui-autocomplete {
+	max-width: 400px;
+	max-height: 200px;
+	overflow-y: auto;
+	/* prevent horizontal scrollbar */
+	overflow-x: hidden;
+	height: auto;
+}
+
+.ui-menu-item div.ui-state-hover, .ui-menu-item div.ui-state-active {
+	color: #ffffff;
+	text-decoration: none;
+	background-color: #f6B664;
+	border-radius: 0px;
+	-webkit-border-radius: 0px;
+	-moz-border-radius: 0px;
+	background-image: none;
+	border: none;
+}
+
+.wordo, wordx {
+max-height: 50px;
+}
+
+/* 카드 부분 */
+body, html, p {
+	height: 100%;
+	font-family: 'Open Sans Condensed', sans-serif;
+}
+
+/*--------------------
+			Shop Card
+			---------------------*/
+.shop-card {
+	width: 400px;
+	background: #f5f5f5;
+	box-shadow: 0 10px 20px rgba(0, 0, 0, .3);
+	/* overflow: hidden; */
+	overflow: visible;
+	border-radius: 5px;
+	padding: 25px;
+	/* text-align: center; */
+	z-index: 2;
+	position: relative;
+	top: 11em;
+	right: 38.5em;
+	margin-left: 30%;
+}
+
+.img_excel{
+   position: relative;
+    width: 94px;
+    height: 82px;
+    margin-left: 288px;
+    z-index: 2;
+    float: right;
+    top: 18px;
+}
+
+.termx {
+	text-align: center;
+}
+
+figure {
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
+	outline: none !important; & img { margin : -95px 0 -60px;
+	width: 100%;
+}
+
+}
+
+&
+:hover {
+	color: #fff !important;
+	border: 1px solid transparent !important;
+	&
+	.
+	bg
+	{
+	opacity
+	:
+	1;
+}
+
+}
+}
+}
+
+/* 검색 후 나오는 카드 text 디자인  */
+
+/* body {
+		    cursor: default;
+		    font-size: 14px;
+		    line-height: 21px;
+		    font-family: "Segoe UI","Helvetica",Garuda,Arial,sans-serif;
+		    color: #666;
+		    padding: 14px;
+			 } */
+.box {
+	width: 265px;
+	float: left;
+	margin-right: 25px;
+}
+
+.title {
+	display: block;
+	padding: 14px 0 15px 0;
+	font-size: 16px;
+	font-weight: bolder;
+	margin-bottom: 10px;
+	border-bottom: 2px solid;
+}
+
+ul {
+	color: #666;
+	list-style: square;
+	padding: 0;
+	margin-left: 20px;
+	font-size: 20px;
+}
+
+.orange {
+	color: #F5876E;
+}
+
+.blue {
+	color: #61A8DC;
+}
+
+.green {
+	color: #8EBD40;
+}
+
+.purple {
+	color: #988CC3;
+}
+
+.gold {
+	color: #D8C86E;
+}
+
+
+select{
+max-height: 50px;
+}
+
+
+h2{
+	margin-top: 46px;
+	margin-right: 1050px;	
+}
+.main-table{
+position: relative; 
+z-index: 1;
+}
+
+form{
+display: flex;
+max-height: 50px;
+}
+.input-group mb-3{
+max-height: 50px;	
+}
+.container{
+left: 335px;
+}
+#termo, #termx{
+    position: absolute;
+    z-index: 3;
+    margin-left: 1000px;
+    margin-bottom: 800px;
+}

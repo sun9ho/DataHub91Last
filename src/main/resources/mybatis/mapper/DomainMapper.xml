@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.dao.IDomainRepository">
+		
+	<select id="selectByPage" parameterType="pager"	
+		resultType="com.mycompany.webapp.dto.DomainVO">
+		<![CDATA[
+			SELECT
+				rnum
+				, DOMAIN_NO AS "domainNo"
+				, DOMAIN_NM AS "domainNm"
+				, DOMAIN_GNM AS "domainGnm"
+				, DOMAIN_EXPLN AS "domainExpln"
+				, DOMAIN_CATG AS "domainCatg"
+				, DOMAIN_TYPE AS "domainType"
+				, DOMAIN_LENGTH AS "domainLength"
+				, APRV_STTS AS "aprvStts"
+				, REG_DT AS "regDt"
+				, MDFCN_DT AS "mdfcnDt"
+				, MDFCN_ID AS "mdfcnId"
+				, REG_ID AS "regId"
+				, DEL_YN AS "delYn"
+			FROM ( 
+					SELECT
+						ROWNUM as rnum
+						, DOMAIN_NO
+						, DOMAIN_NM
+						, DOMAIN_GNM
+						, DOMAIN_EXPLN
+						, DOMAIN_CATG
+						, DOMAIN_TYPE
+						, DOMAIN_LENGTH
+						, APRV_STTS
+						, REG_DT
+						, MDFCN_DT
+						, MDFCN_ID
+						, REG_ID
+						, DEL_YN
+					FROM (
+						SELECT
+						  DOMAIN_NO
+						, DOMAIN_NM
+						, DOMAIN_GNM
+						, DOMAIN_EXPLN
+						, DOMAIN_CATG
+						, DOMAIN_TYPE
+						, DOMAIN_LENGTH
+						, APRV_STTS
+						, REG_DT
+						, MDFCN_DT
+						, MDFCN_ID
+						, REG_ID
+						, DEL_YN
+					FROM
+						DOMAIN ORDER BY DOMAIN_NO ASC )
+					WHERE
+						ROWNUM <= #{endRowNo}
+					)
+				WHERE rnum >= #{startRowNo}
+		]]>
+		</select>
+		
+	<select id="count" resultType="int">
+		<![CDATA[
+			SELECT
+				count(*) FROM DOMAIN ]]>
+	</select>
+		
+	<select id="selectDomain" resultType="com.mycompany.webapp.dto.DomainVO">
+	<![CDATA[
+		SELECT 
+			DOMAIN_NO AS "domainNo"			
+			, DOMAIN_NM AS "domainNm"
+			, DOMAIN_GNM AS "domainGnm"
+			, DOMAIN_EXPLN AS "domainExpln"
+			, DOMAIN_CATG AS "domainCatg"
+			, DOMAIN_TYPE AS "domainType"			
+			, DOMAIN_LENGTH AS "domainLength"
+		FROM
+			DOMAIN
+	]]>	
+	</select>
+	
+	<select id="selectDomainList" resultType="com.mycompany.webapp.dto.DomainVO">
+	<![CDATA[
+		SELECT						
+			DOMAIN_NO AS "domainNo"
+			, DOMAIN_NM AS "domainNm"
+			, DOMAIN_GNM AS "domainDnm"
+			, DOMAIN_EXPLN AS "domainExpln"
+			, DOMAIN_CATG AS "domainCatg"			
+			, DOMAIN_TYPE AS "domainType"
+			, DOMAIN_LENGTH AS "domainLength"
+			, APRV_STTS AS "aprvStts"
+			, NVL(TO_CHAR(REG_DT,'RRRR-MM-DD'), ' ') AS "regDt"
+			, NVL(TO_CHAR(MDFCN_DT,'RRRR-MM-DD'), ' ') AS "mdfcnDt"
+			, MDFCN_ID AS "mdfcnId"
+			, REG_ID AS "regId"
+			, DEL_YN AS "delYn"
+		FROM
+			DOMAIN
+		WHERE 
+			DEL_YN IS NULL OR DEL_YN='N'
+	]]>
+	</select>
+	
+	<select id="selectDomainDetail" parameterType="String" resultType="com.mycompany.webapp.dto.DomainVO">
+	<![CDATA[
+		SELECT						
+			DOMAIN_NO AS "domainNo"
+			, DOMAIN_NM AS "domainNm"
+			, DOMAIN_GNM AS "domainDnm"
+			, DOMAIN_EXPLN AS "domainExpln"
+			, DOMAIN_CATG AS "domainCatg"			
+			, DOMAIN_TYPE AS "domainType"
+			, DOMAIN_LENGTH AS "domainLength"
+			, APRV_STTS AS "aprvStts"
+			, REG_DT AS "regDt"
+			, MDFCN_DT AS "mdfcnDt"
+			, MDFCN_ID AS "mdfcnId"
+			, REG_ID AS "regId"
+			, DEL_YN AS "delYn"
+		FROM
+			DOMAIN
+		WHERE 
+			DOMAIN_NM =#{domainNm}  AND (DEL_YN IS NULL OR DEL_YN='N')
+	]]>
+	</select>
+	
+	
+	<insert id="insertDomain" parameterType="com.mycompany.webapp.dto.DomainVO">
+		<![CDATA[
+		INSERT INTO 
+			DOMAIN
+		VALUES
+			(DOMAIN_SEQ.NEXTVAL
+			, #{domainNm}
+			, #{domainGnm}
+			, #{domainCatg}
+			, #{domainExpln}
+			, #{domainType}
+			, #{domainLength}
+			, #{aprvStts}
+			, #{regDt}
+			, #{regId})
+		]]>
+	</insert>
+	
+	<update id="updateDomain" parameterType="com.mycompany.webapp.dto.DomainVO">
+		<![CDATA[
+		UPDATE DOMAIN SET 
+			DOMAIN_NO=#{domainNo}
+			, DOMAIN_NM=#{domainNm}
+			, DOMAIN_GNM=#{domainGnm}
+			, DOMAIN_EXPLN=#{domainExpln}
+			, DOMAIN_CATG=#{domainCatg}
+			, DOMAIN_TYPE=#{domainType}		
+			, DOMAIN_LENGTH=#{domainLength}			
+			, APRV_STTS=#{aprvStts}
+			, REG_DT=sysdate
+			, MDFCN_DT=sysdate
+			, MDFCN_ID=#{mdfcnId}
+			, REG_ID=#{regId}
+			, DEL_YN=#{delYn}
+		WHERE 
+			DOMAIN_NO=#{domainNo}
+			]]>
+	</update>
+	
+	<update id="deleteDomain">
+	<![CDATA[
+		UPDATE DOMAIN SET
+        	MDFCN_DT = sysdate
+        	,MDFCN_ID =#{mdfcnId}
+         	,DEL_YN='Y'
+         WHERE 
+            DOMAIN_NO=#{domainNo}
+	]]>
+	</update>
+	
+	
+	<select id="getDetailDomainNo" resultType="com.mycompany.webapp.dto.DomainVO">
+		<![CDATA[
+		 SELECT
+		 	DOMAIN_NO AS "domainNo"
+			, DOMAIN_NM AS "domainNm"
+			, DOMAIN_GNM AS "domainDnm"
+			, DOMAIN_EXPLN AS "domainExpln"
+			, DOMAIN_CATG AS "domainCatg"			
+			, DOMAIN_TYPE AS "domainType"
+			, DOMAIN_LENGTH AS "domainLength"
+			, APRV_STTS AS "aprvStts"
+			, REG_DT AS "regDt"
+			, MDFCN_DT AS "mdfcnDt"
+			, MDFCN_ID AS "mdfcnId"
+			, REG_ID AS "regId"
+			, DEL_YN AS "delYn"
+		FROM 
+			DOMAIN
+        WHERE
+            DOMAIN_NO=#{domainNo}
+		]]>	
+	</select>
+	
+	<select id="searchDomain" resultType="hashmap">
+		<![CDATA[
+			SELECT 
+				DOMAIN_NM as "domainNm"
+			FROM 
+				DOMAIN
+			WHERE 
+				DOMAIN_NM LIKE '%'|| #{searchvalue} || '%'
+		]]>
+	</select>
+	
+</mapper>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:jee="http://www.springframework.org/schema/jee"
+	xsi:schemaLocation="http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<!-- Connection Pool -->
+	<bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" 
+		  destroy-method="close"> 
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"/>
+	   <property name="url" value="jdbc:oracle:thin:@kosa403.iptime.org:11521:xe"/>
+	   <!-- <property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"/> -->
+		<property name="username" value="sungho"/>
+		<property name="password" value="123"/>
+		<property name="initialSize" value="2"/>
+		<property name="maxTotal" value="3"/>
+		<property name="maxIdle" value="2"/>
+	</bean>
+	   
+	   <!-- 
+	   <property name="driverClassName" value="net.sf.log4jdbc.DriverSpy"/>
+       <property name="url" value="jdbc:log4jdbc:oracle:thin:@localhost:1521:orcl"/> 
+       -->
+	   
+		
+	
+	<!-- 
+	<jee:jndi-lookup id="dataSource" jndi-name="jdbc/spring" expected-type="javax.sql.DataSource"/>
+	-->
+</beans>

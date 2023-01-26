@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.dao.IMemberRepository">
+	
+	<select id="selectMember" resultType="com.mycompany.webapp.dto.MemberVO">
+	<![CDATA[
+		SELECT
+			MBR_ID AS "mbrId",
+			MBR_PSWD AS "mbrPswd",
+			MBR_EML AS "mbrEml",
+			MBR_YN AS "mbrYn"
+		FROM
+			MEMBER
+		WHERE
+			MBR_ID = #{mbrId}
+	]]>	
+	</select>
+	
+	<select id="getPassword" resultType="String">
+	<![CDATA[
+		SELECT
+			MBR_PSWD AS "mbrPswd"
+		FROM
+			MEMBER
+        WHERE
+            mbr_id = #{mbrId}
+	]]>
+	</select>
+	
+</mapper>

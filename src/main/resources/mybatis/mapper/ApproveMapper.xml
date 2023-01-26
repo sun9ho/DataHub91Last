@@ -1,0 +1,565 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.dao.IApproveRepository">
+	
+	
+	<!--word paging -->
+	<select id="approveWordPage" parameterType="pager" resultType="wordVO">
+      <![CDATA[      
+         SELECT 
+                rnum
+               ,WORD_NO AS "wordNo"
+               ,WORD_NM AS "wordNm"
+               ,WORD_ENG_ABBN AS "wordEngAbbn"
+               ,WORD_ENG_NM AS "wordEngNm"
+               ,WORD_EXPLN AS "wordExpln" 
+               ,APRV_STTS AS "aprvStts"
+               ,REG_DT AS "regDt"
+               ,MDFCN_DT AS "mdfcnDt"
+               ,MDFCN_ID AS "mdfcnId"
+               ,REG_ID AS "regId"
+               ,DEL_YN AS "delYn"
+            FROM (
+                    SELECT 
+                         ROWNUM as rnum
+                        ,WORD_NO 
+                        ,WORD_NM 
+                        ,WORD_ENG_ABBN 
+                        ,WORD_ENG_NM 
+                        ,WORD_EXPLN  
+                        ,APRV_STTS 
+                        ,REG_DT 
+                        ,MDFCN_DT 
+                        ,MDFCN_ID 
+                        ,REG_ID 
+                        ,DEL_YN
+                   FROM (
+                         SELECT 
+                            WORD_NO
+                           ,WORD_NM 
+                           ,WORD_ENG_ABBN 
+                           ,WORD_ENG_NM 
+                           ,WORD_EXPLN 
+                           ,APRV_STTS 
+                           ,REG_DT 
+                           ,MDFCN_DT
+                           ,MDFCN_ID 
+                           ,REG_ID 
+                           ,DEL_YN 
+                         FROM 
+                         	WORD, member                          
+                         WHERE
+                            REG_ID = MBR_ID AND APRV_STTS='승인대기'
+                         ORDER BY WORD_NO ASC                         
+                       )
+                    WHERE 
+                       ROWNUM <= #{endRowNo}
+                  )
+            WHERE 
+               rnum >= #{startRowNo}
+      ]]>
+   </select>
+	
+	<!--word count -->
+   <select id="wordCount" resultType="int">
+   		<![CDATA[
+   			SELECT 
+                  count(*)
+            FROM 
+            	 WORD, member                          
+            WHERE
+                 REG_ID = MBR_ID AND APRV_STTS='승인대기'
+                 ORDER BY WORD_NO ASC                        		
+   		]]>
+   </select>
+   
+   
+   <!--domain page -->
+   <select id="approveDomainPage" parameterType="pager" resultType="com.mycompany.webapp.dto.DomainVO">
+      <![CDATA[      
+         SELECT
+				rnum
+				, DOMAIN_NO AS "domainNo"
+				, DOMAIN_NM AS "domainNm"
+				, DOMAIN_GNM AS "domainGnm"
+				, DOMAIN_EXPLN AS "domainExpln"
+				, DOMAIN_CATG AS "domainCatg"
+				, DOMAIN_TYPE AS "domainType"
+				, DOMAIN_LENGTH AS "domainLength"
+				, APRV_STTS AS "aprvStts"
+				, REG_DT AS "regDt"
+				, MDFCN_DT AS "mdfcnDt"
+				, MDFCN_ID AS "mdfcnId"
+				, REG_ID AS "regId"
+				, DEL_YN AS "delYn"
+			FROM ( 
+					SELECT
+						ROWNUM as rnum
+						, DOMAIN_NO
+						, DOMAIN_NM
+						, DOMAIN_GNM
+						, DOMAIN_EXPLN
+						, DOMAIN_CATG
+						, DOMAIN_TYPE
+						, DOMAIN_LENGTH
+						, APRV_STTS
+						, REG_DT
+						, MDFCN_DT
+						, MDFCN_ID
+						, REG_ID
+						, DEL_YN
+					FROM (
+						SELECT
+						  DOMAIN_NO
+						, DOMAIN_NM
+						, DOMAIN_GNM
+						, DOMAIN_EXPLN
+						, DOMAIN_CATG
+						, DOMAIN_TYPE
+						, DOMAIN_LENGTH
+						, APRV_STTS
+						, REG_DT
+						, MDFCN_DT
+						, MDFCN_ID
+						, REG_ID
+						, DEL_YN
+					FROM
+						DOMAIN, MEMBER 
+					WHERE
+						REG_ID = MBR_ID AND APRV_STTS='승인대기'
+					ORDER BY DOMAIN_NO ASC )
+					WHERE
+						ROWNUM <= #{endRowNo}
+					)
+				WHERE rnum >= #{startRowNo}
+      ]]>
+   </select>
+	
+	<!--domain count -->
+   <select id="domainCount" resultType="int">
+   		<![CDATA[
+   			SELECT 
+   				count(*)
+			FROM 
+				DOMAIN D, MEMBER M
+			WHERE 
+				D.REG_ID = M.MBR_ID AND APRV_STTS='승인대기'
+   		]]>
+   </select>
+	<!-- term page -->
+	<select id="termCount" resultType="int">
+         <![CDATA[
+            SELECT 
+                  count(*)
+            FROM 
+                TERM, member                          
+            WHERE
+                 REG_ID = MBR_ID AND APRV_STTS='승인대기'
+                 ORDER BY TERM_NO ASC                              
+         ]]>
+    </select>
+	
+	<select id="approveTermPage" parameterType="pager"
+      resultType="com.mycompany.webapp.dto.TermVO">
+      <![CDATA[      
+         SELECT 
+                rnum
+               ,TERM_NO AS "termNo"
+               ,TERM_NM AS "termNm"
+               ,TERM_EXPLN AS "termExpln"
+               ,TERM_ENG_ABBN AS "termEngAbbn"
+               ,TERM_DNM AS "termDnm" 
+               ,APRV_STTS AS "aprvStts"
+               ,REG_DT AS "regDt"
+               ,MDFCN_DT AS "mdfcnDt"
+               ,MDFCN_ID AS "mdfcnId"
+               ,REG_ID AS "regId"
+               ,DEL_YN AS "delYn"
+            FROM (
+                    SELECT 
+                            ROWNUM as rnum
+                        ,TERM_NO 
+                        ,TERM_NM 
+                        ,TERM_EXPLN 
+                        ,TERM_ENG_ABBN 
+                        ,TERM_DNM 
+                        ,APRV_STTS 
+                        ,REG_DT 
+                        ,MDFCN_DT 
+                        ,MDFCN_ID 
+                        ,REG_ID 
+                        ,DEL_YN
+                    FROM (
+                         SELECT 
+                            TERM_NO
+                           ,TERM_NM 
+                           ,TERM_EXPLN 
+                           ,TERM_ENG_ABBN 
+                           ,TERM_DNM 
+                           ,APRV_STTS 
+                           ,REG_DT 
+                           ,MDFCN_DT
+                           ,MDFCN_ID 
+                           ,REG_ID 
+                           ,DEL_YN 
+                         FROM 
+                            TERM, MEMBER
+                    WHERE 
+                      REG_ID = MBR_ID AND APRV_STTS='승인대기'
+                         ORDER BY TERM_NO ASC                         
+                       )
+                    WHERE 
+                       ROWNUM <= #{endRowNo}
+                  )
+            WHERE 
+               rnum >= #{startRowNo}
+      ]]>
+     </select>
+	
+	
+	
+	
+	<!--member page -->
+	<select id="approveMemberPage" parameterType="pager"
+      resultType="com.mycompany.webapp.dto.MemberVO">
+      <![CDATA[      
+         SELECT 
+                rnum
+               , MBR_ID AS "mbrId"
+               , MBR_PSWD AS "mbrPswd"
+               , MBR_EML AS "mbrEml"
+               , MBR_YN AS "mbrYn"
+           FROM (
+                SELECT
+                    ROWNUM as rnum
+                    , MBR_ID
+                     , MBR_PSWD
+                     , MBR_EML
+                     , MBR_YN
+                  FROM (
+                       SELECT
+                          	MBR_ID
+                       		,MBR_PSWD
+                       	    ,MBR_EML
+                            ,MBR_YN
+                         FROM 
+                            MEMBER 
+                         WHERE
+                         	MBR_YN='N'
+                       )
+                    WHERE 
+                     ROWNUM <= #{endRowNo}
+                  )
+            WHERE 
+               rnum >= #{startRowNo}
+      ]]>
+     </select>
+	
+	 <select id="memberCount" resultType="int">
+      <![CDATA[
+         SELECT 
+                  count(*)
+            FROM 
+                member                          
+            WHERE
+                 mbr_yn='N'
+      ]]>
+    </select>
+	
+	<update id="wordApproval">
+	 <![CDATA[
+	 	UPDATE WORD SET 
+	 		APRV_STTS = '승인완료'
+	 		,DEL_YN = 'N'
+	 	WHERE
+	 		WORD_NO=#{wordNo}
+	 ]]>
+	</update>
+	
+	<delete id="wordReject">
+	 <![CDATA[
+	 	DELETE 
+	 		WORD	 		
+	 	WHERE
+	 		WORD_NO=#{wordNo}
+	 ]]>
+	</delete>
+	
+	<update id="domainApproval">
+	 <![CDATA[
+	 	UPDATE DOMAIN SET
+	 		APRV_STTS = '승인완료'
+	 		,DEL_YN = 'N'
+	 	WHERE
+	 		DOMAIN_NO=#{domainNo}
+	 ]]>
+	</update>
+	
+	<delete id="domainReject">
+	 <![CDATA[
+	 	DELETE 
+	 		DOMAIN	 		
+	 	WHERE
+	 		domain_NO=#{domainNo}
+	 ]]>
+	</delete>
+	
+	<update id="termApproval">
+	 <![CDATA[
+	 	UPDATE TERM SET
+	 		APRV_STTS = '승인완료'
+	 		,DEL_YN = 'N'
+	 	WHERE
+	 		TERM_NO=#{termNo}
+	 ]]>
+	</update>
+	
+	<delete id="termReject">
+	 <![CDATA[
+	 	DELETE 
+	 		TERM 		
+	 	WHERE
+	 		TERM_NO=#{termNo}
+	 ]]>
+	</delete>
+	
+	<update id="memberGrant">
+	 <![CDATA[
+	 	UPDATE MEMBER SET
+	 		MBR_YN = 'Y'
+	 	WHERE
+	 		MBR_ID=#{mbrId}
+	 ]]>
+	</update>
+	
+	<delete id="memberDelete">
+	<![CDATA[
+		DELETE
+			member
+		WHERE
+			MBR_ID=#{mbrId}	
+	]]>
+	</delete>
+	
+	<!-- 아래부터 기간조회 word, domain, term -->
+	<!--word paging -->
+	<select id="approveWordDate" parameterType="pager" resultType="wordVO">
+      <![CDATA[      
+         SELECT 
+                rnum
+               ,WORD_NO AS "wordNo"
+               ,WORD_NM AS "wordNm"
+               ,WORD_ENG_ABBN AS "wordEngAbbn"
+               ,WORD_ENG_NM AS "wordEngNm"
+               ,WORD_EXPLN AS "wordExpln" 
+               ,APRV_STTS AS "aprvStts"
+               ,REG_DT AS "regDt"
+               ,MDFCN_DT AS "mdfcnDt"
+               ,MDFCN_ID AS "mdfcnId"
+               ,REG_ID AS "regId"
+               ,DEL_YN AS "delYn"
+            FROM (
+                    SELECT 
+                         ROWNUM as rnum
+                        ,WORD_NO 
+                        ,WORD_NM 
+                        ,WORD_ENG_ABBN 
+                        ,WORD_ENG_NM 
+                        ,WORD_EXPLN  
+                        ,APRV_STTS 
+                        ,REG_DT 
+                        ,MDFCN_DT 
+                        ,MDFCN_ID 
+                        ,REG_ID 
+                        ,DEL_YN
+                   FROM (
+                         SELECT 
+                            WORD_NO
+                           ,WORD_NM 
+                           ,WORD_ENG_ABBN 
+                           ,WORD_ENG_NM 
+                           ,WORD_EXPLN 
+                           ,APRV_STTS 
+                           ,REG_DT 
+                           ,MDFCN_DT
+                           ,MDFCN_ID 
+                           ,REG_ID 
+                           ,DEL_YN 
+                         FROM 
+                         	WORD
+                         WHERE
+                            TO_CHAR(REG_DT, 'YYYY-MM-DD') BETWEEN TO_DATE(#{select1}, 'YYYY-MM-DD') AND TO_DATE(#{select2}, 'YYYY-MM-DD')
+                            AND APRV_STTS='승인대기'
+                         ORDER BY WORD_NO ASC                       
+                       )
+                    WHERE 
+                       ROWNUM <= #{endRowNo}
+                  )
+            WHERE 
+               rnum >= #{startRowNo}
+      ]]>
+   </select>
+	
+	<!--word count -->
+   <select id="wordCountDate" resultType="int">
+   		<![CDATA[
+   			SELECT 
+                  count(*)
+            FROM 
+            	 WORD                          
+            WHERE
+                 TO_CHAR(REG_DT, 'YYYY-MM-DD') BETWEEN TO_DATE(#{select1}, 'YYYY-MM-DD') AND TO_DATE(#{select2}, 'YYYY-MM-DD')
+                 AND APRV_STTS='승인대기'
+            ORDER BY WORD_NO ASC                      		
+   		]]>
+   </select>
+	
+   <!--domain page -->
+   <select id="approveDomainDate" parameterType="pager" resultType="com.mycompany.webapp.dto.DomainVO">
+      <![CDATA[      
+         SELECT
+				rnum
+				, DOMAIN_NO AS "domainNo"
+				, DOMAIN_NM AS "domainNm"
+				, DOMAIN_GNM AS "domainGnm"
+				, DOMAIN_EXPLN AS "domainExpln"
+				, DOMAIN_CATG AS "domainCatg"
+				, DOMAIN_TYPE AS "domainType"
+				, DOMAIN_LENGTH AS "domainLength"
+				, APRV_STTS AS "aprvStts"
+				, REG_DT AS "regDt"
+				, MDFCN_DT AS "mdfcnDt"
+				, MDFCN_ID AS "mdfcnId"
+				, REG_ID AS "regId"
+				, DEL_YN AS "delYn"
+			FROM ( 
+					SELECT
+						ROWNUM as rnum
+						, DOMAIN_NO
+						, DOMAIN_NM
+						, DOMAIN_GNM
+						, DOMAIN_EXPLN
+						, DOMAIN_CATG
+						, DOMAIN_TYPE
+						, DOMAIN_LENGTH
+						, APRV_STTS
+						, REG_DT
+						, MDFCN_DT
+						, MDFCN_ID
+						, REG_ID
+						, DEL_YN
+					FROM (
+						SELECT
+						  DOMAIN_NO
+						, DOMAIN_NM
+						, DOMAIN_GNM
+						, DOMAIN_EXPLN
+						, DOMAIN_CATG
+						, DOMAIN_TYPE
+						, DOMAIN_LENGTH
+						, APRV_STTS
+						, REG_DT
+						, MDFCN_DT
+						, MDFCN_ID
+						, REG_ID
+						, DEL_YN
+					FROM
+						DOMAIN
+					WHERE
+						TO_CHAR(REG_DT, 'YYYY-MM-DD') BETWEEN TO_DATE(#{select1}, 'YYYY-MM-DD') AND TO_DATE(#{select2}, 'YYYY-MM-DD')
+                            AND APRV_STTS='승인대기'
+                         ORDER BY DOMAIN_NO ASC )
+					WHERE
+						ROWNUM <= #{endRowNo}
+					)
+				WHERE rnum >= #{startRowNo}
+      ]]>
+   </select>
+	
+	<!--domain count -->
+   <select id="domainCountDate" resultType="int">
+   		<![CDATA[
+   			SELECT 
+   				count(*)
+			FROM 
+				DOMAIN D
+			WHERE 
+				TO_CHAR(REG_DT, 'YYYY-MM-DD') BETWEEN TO_DATE(#{select1}, 'YYYY-MM-DD') AND TO_DATE(#{select2}, 'YYYY-MM-DD')
+                AND APRV_STTS='승인대기'
+            ORDER BY DOMAIN_NO ASC
+   		]]>
+   </select>
+	
+	
+   <!-- term page -->
+	<select id="termCountDate" resultType="int">
+         <![CDATA[
+            SELECT 
+                  count(*)
+            FROM 
+                TERM                         
+            WHERE
+                 TO_CHAR(REG_DT, 'YYYY-MM-DD') BETWEEN TO_DATE(#{select1}, 'YYYY-MM-DD') AND TO_DATE(#{select2}, 'YYYY-MM-DD')
+                 AND APRV_STTS='승인대기'
+            ORDER BY TERM_NO ASC                             
+         ]]>
+    </select>
+	
+	<select id="approveTermDate" parameterType="pager"
+      resultType="com.mycompany.webapp.dto.TermVO">
+      <![CDATA[      
+         SELECT 
+                rnum
+               ,TERM_NO AS "termNo"
+               ,TERM_NM AS "termNm"
+               ,TERM_EXPLN AS "termExpln"
+               ,TERM_ENG_ABBN AS "termEngAbbn"
+               ,TERM_DNM AS "termDnm" 
+               ,APRV_STTS AS "aprvStts"
+               ,REG_DT AS "regDt"
+               ,MDFCN_DT AS "mdfcnDt"
+               ,MDFCN_ID AS "mdfcnId"
+               ,REG_ID AS "regId"
+               ,DEL_YN AS "delYn"
+            FROM (
+                    SELECT 
+                            ROWNUM as rnum
+                        ,TERM_NO 
+                        ,TERM_NM 
+                        ,TERM_EXPLN 
+                        ,TERM_ENG_ABBN 
+                        ,TERM_DNM 
+                        ,APRV_STTS 
+                        ,REG_DT 
+                        ,MDFCN_DT 
+                        ,MDFCN_ID 
+                        ,REG_ID 
+                        ,DEL_YN
+                    FROM (
+                         SELECT 
+                            TERM_NO
+                           ,TERM_NM 
+                           ,TERM_EXPLN 
+                           ,TERM_ENG_ABBN 
+                           ,TERM_DNM 
+                           ,APRV_STTS 
+                           ,REG_DT 
+                           ,MDFCN_DT
+                           ,MDFCN_ID 
+                           ,REG_ID 
+                           ,DEL_YN 
+                         FROM 
+                            TERM
+                    WHERE 
+                      TO_CHAR(REG_DT, 'YYYY-MM-DD') BETWEEN TO_DATE(#{select1}, 'YYYY-MM-DD') AND TO_DATE(#{select2}, 'YYYY-MM-DD')
+               		  AND APRV_STTS='승인대기'
+          		    ORDER BY TERM_NO ASC                         
+                       )
+                    WHERE 
+                       ROWNUM <= #{endRowNo}
+                  )
+            WHERE 
+               rnum >= #{startRowNo}
+      ]]>
+     </select>
+</mapper>

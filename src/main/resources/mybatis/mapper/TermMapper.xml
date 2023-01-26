@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.dao.ITermRepository">
+
+		<select id="selectByPage" parameterType="pager"
+		resultType="com.mycompany.webapp.dto.TermVO">
+		<![CDATA[		
+			SELECT 
+	             rnum
+	            ,TERM_NO AS "termNo"
+	            ,TERM_NM AS "termNm"
+	            ,TERM_EXPLN AS "termExpln"
+	            ,TERM_ENG_ABBN AS "termEngAbbn"
+	            ,TERM_DNM AS "termDnm" 
+	            ,APRV_STTS AS "aprvStts"
+	            ,REG_DT AS "regDt"
+	            ,MDFCN_DT AS "mdfcnDt"
+	            ,MDFCN_ID AS "mdfcnId"
+	            ,REG_ID AS "regId"
+	      		,DEL_YN AS "delYn"
+        	 FROM (
+              		SELECT 
+                            ROWNUM as rnum
+		                   ,TERM_NO 
+		                  ,TERM_NM 
+		                  ,TERM_EXPLN 
+		                  ,TERM_ENG_ABBN 
+		                  ,TERM_DNM 
+		                  ,APRV_STTS 
+		                  ,REG_DT 
+		                  ,MDFCN_DT 
+		                  ,MDFCN_ID 
+		                  ,REG_ID 
+		                  ,DEL_YN
+		              FROM (
+		                   SELECT 
+		                      TERM_NO
+		                     ,TERM_NM 
+		                     ,TERM_EXPLN 
+		                     ,TERM_ENG_ABBN 
+		                     ,TERM_DNM 
+		                     ,APRV_STTS 
+		                     ,REG_DT 
+		                     ,MDFCN_DT
+		                     ,MDFCN_ID 
+		                     ,REG_ID 
+		                     ,DEL_YN 
+		                   FROM 
+		                      TERM ORDER BY TERM_NO ASC
+		                 )
+		              WHERE 
+		                 ROWNUM <= #{endRowNo}
+		            )
+	         WHERE 
+	            rnum >= #{startRowNo}			
+		]]>
+	</select>
+	
+	<select id="count" resultType="int">
+	<![CDATA[
+		SELECT
+		count(*)
+		FROM
+		TERM
+	]]>
+	</select>
+	
+	<update id="updateTerm" parameterType="com.mycompany.webapp.dto.TermVO">
+		<![CDATA[
+		UPDATE TERM SET 
+			TERM_NO=#{termNo}
+			, TERM_NM=#{termNm}
+			, TERM_EXPLN=#{termExpln}
+			, TERM_ENG_ABBN=#{termEngAbbn}
+			, TERM_DNM=#{termDnm}
+			, APRV_STTS=#{aprvStts}
+			, REG_DT=sysdate
+			, MDFCN_DT=sysdate
+			, MDFCN_ID=#{mdfcnId}
+			, REG_ID=#{regId}
+			, DEL_YN=#{delYn}
+		WHERE 
+			TERM_NO=#{termNo}
+			]]>
+	</update>
+	
+	<update id="deleteTerm">
+	<![CDATA[
+		UPDATE TERM SET
+        	MDFCN_DT = sysdate
+        	,MDFCN_ID =#{mdfcnId}
+         	,DEL_YN='Y'
+         WHERE 
+            TERM_NO=#{termNo}
+	]]>
+	</update>
+	
+	
+	<select id="termDetailByTermNo" resultType="com.mycompany.webapp.dto.TermVO">
+		<![CDATA[
+		SELECT 
+			 TERM_NO AS "termNo"
+			,TERM_NM AS "termNm"
+			,TERM_EXPLN AS "termExpln"
+			,TERM_ENG_ABBN AS "termEngAbbn"
+			,TERM_DNM AS "termDnm"
+			,APRV_STTS AS "aprvStts" 
+			,REG_DT AS "regDt"
+			,MDFCN_DT AS "mdfcnDt"
+			,MDFCN_ID AS "mdfcnId"
+			,REG_ID AS "regId"
+			,DEL_YN AS "delYn"
+		FROM 
+			TERM
+		WHERE
+			TERM_NO = #{termNo}
+		]]>
+	</select>
+	
+	<select id="getTermDetail" resultType="com.mycompany.webapp.dto.TermVO">
+		<![CDATA[
+		SELECT 
+			 TERM_NO AS "termNo"
+			,TERM_NM AS "termNm"
+			,TERM_EXPLN AS "termExpln"
+			,TERM_ENG_ABBN AS "termEngAbbn"
+			,TERM_DNM AS "termDnm"
+			,APRV_STTS AS "aprvStts" 
+			,REG_DT AS "regDt"
+			,MDFCN_DT AS "mdfcnDt"
+			,MDFCN_ID AS "mdfcnId"
+			,REG_ID AS "regId"
+			,DEL_YN AS "delYn"
+		FROM 
+			TERM
+		WHERE
+			TERM_NM = #{termNm}
+		]]>
+	</select>
+	 
+	<select id="searchTerm" resultType="hashmap">
+		<![CDATA[
+			SELECT
+				TERM_NM as "termNm"
+			FROM 
+				TERM
+			WHERE 
+				TERM_NM LIKE '%'|| #{searchvalue} || '%'
+		]]>
+	</select>
+	
+	<select id="selectTermList" resultType="com.mycompany.webapp.dto.TermVO">
+	<![CDATA[
+		SELECT						
+			TERM_NO AS "termNo"
+			, TERM_NM AS "termNm"
+			, TERM_EXPLN AS "termExpln"
+			, TERM_ENG_ABBN AS "termEngAbbn"
+			, TERM_DNM AS "termDnm"
+			, APRV_STTS AS "aprvStts"
+			, NVL(TO_CHAR(REG_DT,'RRRR-MM-DD'), '') AS "regDt"
+			, NVL(TO_CHAR(MDFCN_DT,'RRRR-MM-DD'), '') AS "mdfcnDt"
+			, MDFCN_ID AS "mdfcnId"
+			, REG_ID AS "regId"
+			, DEL_YN AS "delYn"
+		FROM
+			TERM
+		WHERE 
+			DEL_YN IS NULL OR DEL_YN='N'
+	]]>
+	</select>
+
+</mapper>

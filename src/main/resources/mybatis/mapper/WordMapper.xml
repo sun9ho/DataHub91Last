@@ -1,0 +1,205 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mycompany.webapp.dao.IWordRepository">
+
+   <!-- <select id="selectWord" parameterType="int" resultType="com.mycompany.myapp.word.model.WordVO"> 
+      <![CDATA[ SELECT WORD_NUMBER AS "wordNumber", CS_WORD_NAME AS "csWordName", 
+      CS_WORD_ENG_ABBREVIATION AS "csWordEngAbbreviation", WHERE wordNumber=#{wordNumber}]]> 
+      </select> -->
+   <select id="selectByPage" parameterType="pager" resultType="wordVO">
+      <![CDATA[      
+         SELECT 
+                rnum
+               ,WORD_NO AS "wordNo"
+               ,WORD_NM AS "wordNm"
+               ,WORD_ENG_ABBN AS "wordEngAbbn"
+               ,WORD_ENG_NM AS "wordEngNm"
+               ,WORD_EXPLN AS "wordExpln" 
+               ,APRV_STTS AS "aprvStts"
+               ,REG_DT AS "regDt"
+               ,MDFCN_DT AS "mdfcnDt"
+               ,MDFCN_ID AS "mdfcnId"
+               ,REG_ID AS "regId"
+               ,DEL_YN AS "delYn"
+            FROM (
+                    SELECT 
+                         ROWNUM as rnum
+                        ,WORD_NO 
+                        ,WORD_NM 
+                        ,WORD_ENG_ABBN 
+                        ,WORD_ENG_NM 
+                        ,WORD_EXPLN  
+                        ,APRV_STTS 
+                        ,REG_DT 
+                        ,MDFCN_DT 
+                        ,MDFCN_ID 
+                        ,REG_ID 
+                        ,DEL_YN
+                   FROM (
+                         SELECT 
+                            WORD_NO
+                           ,WORD_NM 
+                           ,WORD_ENG_ABBN 
+                           ,WORD_ENG_NM 
+                           ,WORD_EXPLN 
+                           ,APRV_STTS 
+                           ,REG_DT 
+                           ,MDFCN_DT
+                           ,MDFCN_ID 
+                           ,REG_ID 
+                           ,DEL_YN 
+                         FROM 
+                            WORD ORDER BY WORD_NO ASC
+                       )
+                    WHERE 
+                       ROWNUM <= #{endRowNo}
+                  )
+            WHERE 
+               rnum >= #{startRowNo}
+      ]]>
+   </select>
+
+
+   <select id="count" resultType="int">
+	   <![CDATA[
+	      SELECT
+	      count(*)
+	      FROM
+	      WORD
+	   ]]>
+   </select>
+
+   <select id="getWordInfo" parameterType="String" resultType="wordVO">
+      <![CDATA[
+         SELECT 
+            WORD_NO AS "wordNo"
+            ,WORD_NM AS "wordNm"
+            ,WORD_ENG_ABBN AS "wordEngAbbn"
+            ,WORD_ENG_NM AS "wordEngNm"
+            ,WORD_EXPLN AS "wordExpln" 
+            ,APRV_STTS AS "aprvStts"
+            ,REG_DT AS "regDt"
+            ,MDFCN_DT AS "mdfcnDt"
+            ,MDFCN_ID AS "mdfcnId"
+            ,REG_ID AS "regId"
+            ,DEL_YN AS "delYn"
+         FROM 
+            WORD 
+         WHERE 
+            WORD_NM=#{wordNm}  AND (DEL_YN IS NULL OR DEL_YN='N')
+         ]]>
+   </select>
+
+   <insert id="insertWord" parameterType="wordVO">
+      <![CDATA[
+         INSERT INTO WORD 
+                     (wordNo
+                     ,wordNm
+                     ,wordEngAbbn
+                     ,wordEngNm
+                     ,wordExpln
+                     ,aprvStts
+                     ,regDt
+                     ,mdfcnDt
+                     ,mdfcnId
+                     ,regId
+                     ,delYn) 
+         VALUES 
+            (#{wordNo}
+            ,#{wordNm}
+            ,#{wordEngAbbn}
+            ,#{wordEngNm}
+            ,#{wordExpln}
+            ,#{aprvStts}
+            ,#{regDt}
+            ,#{mdfcnDt}
+            ,#{mdfcnId}
+            ,#{regId}
+            ,#{delYn})
+         ]]>
+   </insert>
+
+   <update id="updateWord" parameterType="wordVO">
+      <![CDATA[
+         UPDATE WORD SET 
+         	WORD_NO=#{wordNo}
+            ,WORD_NM=#{wordNm}  
+            ,WORD_ENG_ABBN=#{wordEngAbbn}
+            ,WORD_ENG_NM=#{wordEngNm} 
+            ,WORD_EXPLN =#{wordExpln} 
+            ,APRV_STTS =#{aprvStts}            
+            ,MDFCN_DT =sysdate
+            ,MDFCN_ID =#{mdfcnId}
+            ,REG_ID =#{regId}
+            ,DEL_YN =#{delYn}
+         WHERE 
+            WORD_NO=#{wordNo}
+      ]]>
+   </update>
+
+   <update id="deleteWord">
+      <![CDATA[
+         UPDATE WORD SET
+        	MDFCN_DT = sysdate
+        	,MDFCN_ID =#{mdfcnId}
+         	,DEL_YN='Y'
+         WHERE 
+            WORD_NO=#{wordNo}
+      ]]>
+   </update>
+
+   <select id="getWordList" resultType="wordVO">
+      <![CDATA[
+         SELECT 
+            WORD_NO AS "wordNo"
+            ,WORD_NM AS "wordNm"
+            ,WORD_ENG_ABBN AS "wordEngAbbn"
+            ,WORD_ENG_NM AS "wordEngNm"
+            ,WORD_EXPLN AS "wordExpln" 
+            ,APRV_STTS AS "aprvStts"
+            ,nvl(REG_DT, sysdate) AS "regDt"
+            ,nvl(MDFCN_DT, sysdate) AS "mdfcnDt"
+            ,MDFCN_ID AS "mdfcnId"
+            ,REG_ID AS "regId"
+            ,DEL_YN AS "delYn"
+         FROM 
+            WORD 
+         WHERE 
+            DEL_YN IS NULL OR DEL_YN='N'         
+         ]]>
+   </select>
+   <select id="getDetailwordNo" resultType="wordVO">
+   <![CDATA[
+    	SELECT
+    		WORD_NO AS "wordNo"
+    		,WORD_NM AS "wordNm"
+    		,WORD_ENG_ABBN AS "wordEngAbbn"
+    		,WORD_ENG_NM AS "wordEngNm"
+    		,WORD_EXPLN AS "wordExpln"
+    		,APRV_STTS AS "aprvStts"
+    		,REG_DT AS "regDt"
+    		,MDFCN_DT AS "mdfcnDt"
+    		,MDFCN_ID AS "mdfcnId"
+    		,REG_ID AS "regId"
+    		,DEL_YN AS "delYn"
+    	FROM
+    		WORD
+    	WHERE 
+    		WORD_NO = #{wordNo} 
+   ]]>
+   </select>
+   
+   <select id="searchWord" resultType="hashmap">
+      <![CDATA[
+         SELECT
+            WORD_NM as "wordNm"
+         FROM 
+            WORD
+         WHERE 
+            WORD_NM LIKE '%'|| #{searchvalue} || '%'
+      ]]>
+   </select>
+
+    
+
+</mapper>
